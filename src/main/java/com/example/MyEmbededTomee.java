@@ -8,16 +8,21 @@ import javax.naming.Context;
 public class MyEmbededTomee {
     public static void main(String[] args) throws Exception {
 
-        Properties properties = new Properties();
+        Properties p = new Properties();
 
-        properties.setProperty(EJBContainer.PROVIDER, "tomee-embedded");
-        properties
-            .setProperty(
+        p.setProperty(EJBContainer.PROVIDER, "tomee-embedded");
+        p.setProperty(
                 "javax.ejb.embeddable.modules",
-                "/stf/prj/tmp/tomee-embed-run-webapp/target/tomee-embed-run-webapp-0.0.1-SNAPSHOT");
+                "/stf/prj/tmp/tomee-embedded-trial/target/"
+                    + "tomee-embedded-trial-0.0.1-SNAPSHOT");
+
+        p.put("movieDatabase", "new://Resource?type=DataSource");
+        p.put("movieDatabase.JdbcDriver", "org.hsqldb.jdbcDriver");
+        p.put("movieDatabase.JdbcUrl", "jdbc:hsqldb:mem:moviedb");
+        p.put("openejb.validation.output.level", "VERBOSE");
 
         Context context =
-            EJBContainer.createEJBContainer(properties).getContext();
+            EJBContainer.createEJBContainer(p).getContext();
 
         System.out.println("*** started ***");
 
