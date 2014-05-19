@@ -37,7 +37,7 @@ public class Movies {
 
     @PostConstruct
     public void testHibernate() throws Exception {
-        System.out.println(" ##### testHibernate() ");
+        System.out.println("##### testHibernate() ");
         addMovie(new Movie("Quentin Tarantino", "Reservoir Dogs", 1992));
         addMovie(new Movie("Joel Coen", "Fargo", 1996));
         addMovie(new Movie("Joel Coen", "The Big Lebowski", 1998));

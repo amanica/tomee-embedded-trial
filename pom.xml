@@ -32,6 +32,8 @@
         <configuration>
           <tomeeVersion>${tomee.version}</tomeeVersion>
           <tomeeClassifier>plus</tomeeClassifier>
+          <deployOpenEjbApplication>true</deployOpenEjbApplication>
+<!--           <debug>true</debug> -->
         </configuration>
       </plugin>
       <plugin>
