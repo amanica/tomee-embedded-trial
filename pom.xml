@@ -8,8 +8,12 @@
   <version>0.0.1-SNAPSHOT</version>
 
   <properties>
-    <tomee.version>1.6.0.1</tomee.version>
-    <openejb.version>4.6.0.1</openejb.version>
+    <!-- <tomee.version>1.6.0.1</tomee.version>
+    <openejb.version>4.6.0.1</openejb.version> -->
+
+    <tomee.version>1.6.1-SNAPSHOT</tomee.version>
+    <openejb.version>4.6.1-SNAPSHOT</openejb.version>
+
     <ehcache.version>2.7.6</ehcache.version>
     <openejb.javaee-api.version>6.0-5</openejb.javaee-api.version>
 
@@ -75,17 +79,18 @@
       <artifactId>openejb-core-hibernate</artifactId>
       <version>${openejb.version}</version>
       <type>pom</type>
+      <exclusions>
+        <exclusion>
+          <artifactId>ehcache-core</artifactId>
+          <groupId>net.sf.ehcache</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
-<!--
-    <dependency>
-      <groupId>org.apache.openejb</groupId>
-      <artifactId>javaee-api</artifactId>
-      <version>${openejb.javaee-api.version}</version>
-      <scope>provided</scope>
-    </dependency>
-  -->
   </dependencies>
+  <!--
+  else i get [ERROR] 'dependencies.dependency.version' for net.sf.ehcache:ehcache:pom is missing. @ line 59, column 17
+   -->
   <dependencyManagement>
     <dependencies>
       <dependency>
