@@ -14,7 +14,7 @@ import org.junit.runner.RunWith;
 
 @EnableServices(value = "jaxrs")
 @RunWith(ApplicationComposer.class)
-public class PingTestApplicationComposer {
+public class PingRSTestApplicationComposer {
     @Module
     public SingletonBean app() {
 
@@ -24,10 +24,11 @@ public class PingTestApplicationComposer {
     }
 
     @Test
-    public void get() throws IOException {
+    public void ping() throws IOException {
         final String message =
             WebClient.create("http://localhost:4204").path(
-                "/PingTestApplicationComposer/ping").get(String.class);
+                "/" + getClass().getSimpleName() + "/ping")
+                .get(String.class);
         System.out.println("got message: " + message);
         assertEquals("pong", message);
     }

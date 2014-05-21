@@ -8,11 +8,13 @@
   <version>0.0.1-SNAPSHOT</version>
 
   <properties>
-    <tomee.version>1.6.0.1</tomee.version>
     <openejb.version>4.6.0.1</openejb.version>
+    <tomee.version>1.6.0.1</tomee.version>
     <!--
     <tomee.version>1.6.1-SNAPSHOT</tomee.version>
     <openejb.version>4.6.1-SNAPSHOT</openejb.version>
+    <tomee.version>1.7.0-SNAPSHOT</tomee.version>
+    <openejb.version>4.7.0-SNAPSHOT</openejb.version>
     -->
 
     <ehcache.version>2.7.6</ehcache.version>
@@ -22,6 +24,8 @@
     <vaadin.version>6.7.1</vaadin.version>
     <gwt.version>2.3.0</gwt.version>
     <gwt.plugin.version>2.2.0</gwt.plugin.version>
+
+    <slf4j.version>1.7.5</slf4j.version>
   </properties>
 
   <build>
@@ -57,19 +61,6 @@
       <artifactId>vaadin</artifactId>
       <version>${vaadin.version}</version>
     </dependency>
-
-<!-- needed because old ehcache dependencies seems messed up -->
-    <dependency>
-      <groupId>net.sf.ehcache</groupId>
-      <artifactId>ehcache</artifactId>
-      <!-- <version>${ehcache.version}</version> -->
-      <type>pom</type>
-    </dependency>
-    <!-- <dependency>
-      <groupId>net.sf.ehcache</groupId>
-      <artifactId>ehcache-terracotta</artifactId>
-      <version>${ehcache.version}</version>
-    </dependency> -->
     <dependency>
       <groupId>org.apache.openejb</groupId>
       <artifactId>openejb-cxf-rs</artifactId>
@@ -98,33 +89,42 @@
           <groupId>net.sf.ehcache</groupId>
         </exclusion>
       </exclusions>
+    </dependency>
+     -->
+
+<!-- needed because old ehcache dependencies seems messed up -->
+    <!-- <dependency>
+      <groupId>net.sf.ehcache</groupId>
+      <artifactId>ehcache</artifactId>
+      <type>pom</type>
     </dependency> -->
+
     <dependency>
-        <groupId>org.hibernate</groupId>
-        <artifactId>hibernate-entitymanager</artifactId>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-entitymanager</artifactId>
         <!-- <version>4.3.5.Final</version> -->
-        <version>4.2.12.Final</version>
-        <exclusions>
-          <exclusion>
-            <groupId>javax.persistence</groupId>
-            <artifactId>persistence-api</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>org.hibernate.javax.persistence</groupId>
-            <artifactId>hibernate-jpa-2.0-api</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>javax.transaction</groupId>
-            <artifactId>jta</artifactId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>org.hibernate</groupId>
-        <artifactId>hibernate-validator</artifactId>
+      <version>4.2.12.Final</version>
+      <exclusions>
+        <exclusion>
+          <groupId>javax.persistence</groupId>
+          <artifactId>persistence-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.hibernate.javax.persistence</groupId>
+          <artifactId>hibernate-jpa-2.0-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>javax.transaction</groupId>
+          <artifactId>jta</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-validator</artifactId>
         <!-- <version>5.1.1.Final</version> -->
-        <version>4.2.0.Final</version>
-      </dependency>
+      <version>4.2.0.Final</version>
+    </dependency>
 
     <dependency>
       <groupId>junit</groupId>
@@ -133,10 +133,31 @@
       <scope>test</scope>
     </dependency>
 
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version> <!-- in java-pom since 1.1.3 -->
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>${slf4j.version}</version> <!-- in java-pom since 1.1.3 -->
+      <exclusions>
+        <exclusion>
+            <!-- confilcts with javaee-api -->
+          <groupId>javax.xml.bind</groupId>
+          <artifactId>jaxb-api</artifactId>
+        </exclusion>
+        <exclusion>
+            <!-- confilcts with javaee-api -->
+          <groupId>com.sun.xml.bind</groupId>
+          <artifactId>jaxb-impl</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
   </dependencies>
   <!--
   else i get [ERROR] 'dependencies.dependency.version' for net.sf.ehcache:ehcache:pom is missing. @ line 59, column 17
-   -->
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -147,4 +168,5 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+   -->
 </project>
