@@ -10,7 +10,6 @@
   <properties>
     <tomee.version>1.6.0.1</tomee.version>
     <openejb.version>4.6.0.1</openejb.version>
-
     <!--
     <tomee.version>1.6.1-SNAPSHOT</tomee.version>
     <openejb.version>4.6.1-SNAPSHOT</openejb.version>
@@ -71,14 +70,24 @@
       <artifactId>ehcache-terracotta</artifactId>
       <version>${ehcache.version}</version>
     </dependency> -->
+    <dependency>
+      <groupId>org.apache.openejb</groupId>
+      <artifactId>openejb-cxf-rs</artifactId>
+      <version>${openejb.version}</version>
+    </dependency>
 
     <dependency>
       <groupId>org.apache.openejb</groupId>
       <artifactId>tomee-embedded</artifactId>
       <version>${tomee.version}</version>
     </dependency>
-
     <dependency>
+      <groupId>org.apache.openejb</groupId>
+      <artifactId>tomee-jaxrs</artifactId>
+      <version>${tomee.version}</version>
+    </dependency>
+
+<!--     <dependency>
       <groupId>org.apache.openejb</groupId>
       <artifactId>openejb-core-hibernate</artifactId>
       <version>${openejb.version}</version>
@@ -89,6 +98,39 @@
           <groupId>net.sf.ehcache</groupId>
         </exclusion>
       </exclusions>
+    </dependency> -->
+    <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-entitymanager</artifactId>
+        <!-- <version>4.3.5.Final</version> -->
+        <version>4.2.12.Final</version>
+        <exclusions>
+          <exclusion>
+            <groupId>javax.persistence</groupId>
+            <artifactId>persistence-api</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.0-api</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>javax.transaction</groupId>
+            <artifactId>jta</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-validator</artifactId>
+        <!-- <version>5.1.1.Final</version> -->
+        <version>4.2.0.Final</version>
+      </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.10</version>
+      <scope>test</scope>
     </dependency>
 
   </dependencies>
