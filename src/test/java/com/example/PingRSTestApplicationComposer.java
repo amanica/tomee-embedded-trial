@@ -12,7 +12,8 @@ import org.apache.openejb.testing.Module;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-@EnableServices(value = "jaxrs")
+@EnableServices(value = {"jaxrs" // , "ejbd"
+})
 @RunWith(ApplicationComposer.class)
 public class PingRSTestApplicationComposer {
     @Module
