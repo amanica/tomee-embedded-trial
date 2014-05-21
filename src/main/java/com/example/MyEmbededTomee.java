@@ -1,13 +1,10 @@
 package com.example;
 
 import java.io.File;
-import java.lang.reflect.Field;
 import java.util.Properties;
 
 import javax.ejb.embeddable.EJBContainer;
 import javax.naming.Context;
-
-import org.apache.tomee.embedded.Configuration;
 
 public class MyEmbededTomee {
     // @Parameter(defaultValue = "${project.packaging}")
@@ -52,10 +49,10 @@ public class MyEmbededTomee {
             "/stf/prj/tmp/tomee-embedded-trial/target/"
                 + "tomee-embedded-trial-0.0.1-SNAPSHOT");
 
-        p.put("movieDatabase", "new://Resource?type=DataSource");
-        p.put("movieDatabase.JdbcDriver", "org.hsqldb.jdbcDriver");
-        p.put("movieDatabase.JdbcUrl", "jdbc:hsqldb:mem:moviedb");
-        p.put("openejb.validation.output.level", "VERBOSE");
+        // p.put("movieDatabase", "new://Resource?type=DataSource");
+        // p.put("movieDatabase.JdbcDriver", "org.hsqldb.jdbcDriver");
+        // p.put("movieDatabase.JdbcUrl", "jdbc:hsqldb:mem:moviedb");
+        // p.put("openejb.validation.output.level", "VERBOSE");
 
         Context context =
             EJBContainer.createEJBContainer(p).getContext();
@@ -115,29 +112,29 @@ public class MyEmbededTomee {
 
     }
 
-    private Configuration getConfig() { // lazy way but it works fine
-        final Configuration config = new Configuration();
-        for (Field field : getClass().getDeclaredFields()) {
-            try {
-                final Field configField =
-                    Configuration.class.getDeclaredField(field.getName());
-                field.setAccessible(true);
-                configField.setAccessible(true);
-
-                final Object value = field.get(this);
-                if (value != null) {
-                    configField.set(config, value);
-                    System.out.println("using " + field.getName() + " = "
-                        + value);
-                }
-            } catch (NoSuchFieldException nsfe) {
-                // ignored
-            } catch (Exception e) {
-                System.out.println("can't initialize attribute "
-                    + field.getName());
-            }
-
-        }
-        return config;
-    }
+    // private Configuration getConfig() { // lazy way but it works fine
+    // final Configuration config = new Configuration();
+    // for (Field field : getClass().getDeclaredFields()) {
+    // try {
+    // final Field configField =
+    // Configuration.class.getDeclaredField(field.getName());
+    // field.setAccessible(true);
+    // configField.setAccessible(true);
+    //
+    // final Object value = field.get(this);
+    // if (value != null) {
+    // configField.set(config, value);
+    // System.out.println("using " + field.getName() + " = "
+    // + value);
+    // }
+    // } catch (NoSuchFieldException nsfe) {
+    // // ignored
+    // } catch (Exception e) {
+    // System.out.println("can't initialize attribute "
+    // + field.getName());
+    // }
+    //
+    // }
+    // return config;
+    // }
 }
