@@ -61,23 +61,93 @@
       <artifactId>vaadin</artifactId>
       <version>${vaadin.version}</version>
     </dependency>
+
     <dependency>
       <groupId>org.apache.openejb</groupId>
       <artifactId>openejb-cxf-rs</artifactId>
       <version>${openejb.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.apache.openejb</groupId>
+      <artifactId>openejb-core</artifactId>
+      <version>${openejb.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.openjpa</groupId>
+          <artifactId>openjpa</artifactId>
+        </exclusion>
+        <exclusion>
+          <artifactId>openjpa</artifactId>
+          <groupId>org.apache.openejb.patch</groupId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-jdk14</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
 
+    <dependency>
+      <groupId>org.apache.openejb</groupId>
+      <artifactId>openejb-cxf</artifactId>
+      <version>${openejb.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.openejb</groupId>
+      <artifactId>openejb-ejbd</artifactId>
+      <version>${openejb.version}</version>
+      <exclusions>
+       <!--  <exclusion>
+          <groupId>hsqldb</groupId>
+          <artifactId>hsqldb</artifactId>
+        </exclusion> -->
+        <exclusion>
+          <artifactId>log4j</artifactId>
+          <groupId>log4j</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>slf4j-jdk14</artifactId>
+          <groupId>org.slf4j</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>openjpa</artifactId>
+          <groupId>org.apache.openjpa</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
     <dependency>
       <groupId>org.apache.openejb</groupId>
       <artifactId>tomee-embedded</artifactId>
       <version>${tomee.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.openjpa</groupId>
+          <artifactId>openjpa</artifactId>
+        </exclusion>
+        <exclusion>
+          <artifactId>openjpa</artifactId>
+          <groupId>org.apache.openejb.patch</groupId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-jdk14</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-log4j12</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.openejb</groupId>
       <artifactId>tomee-jaxrs</artifactId>
       <version>${tomee.version}</version>
     </dependency>
-
+    <dependency>
+      <groupId>org.apache.openejb</groupId>
+      <artifactId>tomee-catalina</artifactId>
+      <version>${tomee.version}</version>
+    </dependency>
 <!--     <dependency>
       <groupId>org.apache.openejb</groupId>
       <artifactId>openejb-core-hibernate</artifactId>
@@ -136,12 +206,12 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>${slf4j.version}</version> <!-- in java-pom since 1.1.3 -->
+      <version>${slf4j.version}</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-log4j12</artifactId>
-      <version>${slf4j.version}</version> <!-- in java-pom since 1.1.3 -->
+      <version>${slf4j.version}</version>
       <exclusions>
         <exclusion>
             <!-- confilcts with javaee-api -->
@@ -155,6 +225,7 @@
         </exclusion>
       </exclusions>
     </dependency>
+
   </dependencies>
   <!--
   else i get [ERROR] 'dependencies.dependency.version' for net.sf.ehcache:ehcache:pom is missing. @ line 59, column 17

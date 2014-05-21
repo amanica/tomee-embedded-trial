@@ -15,7 +15,7 @@ import org.junit.runner.RunWith;
 @EnableServices(value = {"jaxrs" // , "ejbd"
 })
 @RunWith(ApplicationComposer.class)
-public class PingRSTestApplicationComposer {
+public class PingRSApplicationComposerTest {
     @Module
     public SingletonBean app() {
 

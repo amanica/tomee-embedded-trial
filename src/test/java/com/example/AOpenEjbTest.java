@@ -1,10 +1,12 @@
 package com.example;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.Properties;
 
-import javax.ejb.embeddable.EJBContainer;
 import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import org.apache.openejb.api.LocalClient;
@@ -46,8 +48,7 @@ public abstract class AOpenEjbTest {
         Properties properties = new Properties();
         setProperties(properties);
 
-        Context context =
-            EJBContainer.createEJBContainer(properties).getContext();
+        Context context = getContext(properties);
         try {
             if (target.getClass().getAnnotation(LocalClient.class) == null) {
                 System.out
@@ -68,12 +69,19 @@ public abstract class AOpenEjbTest {
         return context;
     }
 
+    protected Context getContext(Properties properties) {
+        try {
+            return new InitialContext(properties);
+        } catch (NamingException e) {
+            throw new RuntimeException("Could not create new InitialContext", e);
+        }
+    }
+
     /**
      * You should call super if you override this..
      */
     protected void setProperties(Properties properties) {
         // NB jndi.properties gets populated automagically!
-
         properties.setProperty(Context.INITIAL_CONTEXT_FACTORY,
             "org.apache.openejb.client.LocalInitialContextFactory");
         // Enabling option 'openejb.embedded.remotable' requires class
@@ -110,4 +118,35 @@ public abstract class AOpenEjbTest {
     public void tearDownBeforeClosingContext() throws Exception {
     }
 
+    protected static void loadProperties(final Properties properties,
+        final String resourcePath) {
+        try {
+            ClassLoader classLoader = Thread.currentThread()
+                .getContextClassLoader();
+            InputStream resourceAsStream = classLoader
+                .getResourceAsStream(resourcePath);
+            if (resourceAsStream == null) {
+
+                System.out.println("Could not load properties from {}." +
+                    resourcePath);
+                System.out.println("Thread.currentThread(): "
+                    + Thread.currentThread());
+                System.out.println("Thread.currentThread().getName(): "
+                    + Thread.currentThread().getName());
+                System.out
+                    .println("Thread.currentThread().getContextClassLoader(): "
+                        + Thread.currentThread().getContextClassLoader());
+                // System.out.println(
+                // "EbrFactory.class.getClassLoader(): "
+                // + EbrFactory.class.getClassLoader());
+                return;
+            }
+
+            properties.load(resourceAsStream);
+        } catch (IOException e) {
+            System.out.println("Could not load properties from " + resourcePath
+                + ".");
+            e.printStackTrace();
+        }
+    }
 }
