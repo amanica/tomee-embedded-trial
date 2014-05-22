@@ -9,10 +9,9 @@ import org.apache.openejb.config.EjbModule;
 import org.apache.openejb.jee.Beans;
 import org.apache.openejb.jee.EjbJar;
 import org.apache.openejb.jee.Empty;
-// import org.apache.openejb.jee.Persistence;
-// import org.apache.openejb.jee.Persistence.PersistenceUnit;
 import org.apache.openejb.jee.SingletonBean;
 import org.apache.openejb.jee.StatelessBean;
+import org.apache.openejb.jee.Webservices;
 import org.apache.openejb.jee.jpa.unit.Persistence;
 import org.apache.openejb.jee.jpa.unit.PersistenceUnit;
 import org.apache.openejb.junit.ApplicationComposer;
@@ -22,9 +21,11 @@ import org.hibernate.ejb.HibernatePersistence;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-@EnableServices(value = {"jaxrs", "ejbd"})
+@EnableServices(value = {"jaxrs", "ejbd"}, httpDebug = true)
 @RunWith(ApplicationComposer.class)
 public class PingRSApplicationComposerTest {
+
+    // @Classes(value = {MyRestApplication.class})
     @Module
     public EjbModule app() throws Exception {
         SingletonBean beanMovies = new SingletonBean(Movies.class);
@@ -43,6 +44,9 @@ public class PingRSApplicationComposerTest {
 
         final EjbModule jar = new EjbModule(ejbJar);
         jar.setBeans(beans);
+
+        Webservices webservices = new Webservices();
+        jar.setWebservices(webservices);
 
         return jar;
     }
@@ -69,7 +73,9 @@ public class PingRSApplicationComposerTest {
     public void ping() throws IOException {
         final String message =
             WebClient.create("http://localhost:4204").path(
-                "/" + getClass().getSimpleName() + "/ping")
+                "/" + getClass().getSimpleName() +
+                    // "/MyRestApplication" +
+                    "/ping")
                 .get(String.class);
         System.out.println("got message: " + message);
         assertEquals("pong Reservoir Dogs", message);

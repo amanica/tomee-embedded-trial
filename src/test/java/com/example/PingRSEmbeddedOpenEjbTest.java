@@ -56,21 +56,33 @@ public class PingRSEmbeddedOpenEjbTest extends AOpenEjbTest {
         properties.setProperty("openejb.tempclassloader.skip", "annotations");
         properties.setProperty(
             "openejb.deployments.classpath.require.descriptor", "NONE");
-        properties.setProperty(EJBContainer.APP_NAME, "appName");
+        properties.setProperty(EJBContainer.APP_NAME, "myAppName");
         properties.put("movieDatabase", "new://Resource?type=DataSource");
         properties.put("movieDatabase.JdbcDriver", "org.hsqldb.jdbcDriver");
         properties.put("movieDatabase.JdbcUrl", "jdbc:hsqldb:mem:moviedb");
+
+        /*
+         * The following is only needed because my project's name starts with
+         * tomee which causes openejb to automatically ignore it silently :(
+         * org.apache.openejb.OpenEjbContainer$NoModulesFoundException: No modules found to deploy.
+         */
+        properties.setProperty("openejb.deployments.classpath.include",
+            ".*-trial.*");
+        properties.setProperty("openejb.deployments.package.include",
+            ".*-trial.*");
+
     }
+
     @Test
     public void ping() {
         final String message =
-            WebClient.create("http://localhost:8080").path(
-                // "/" + getClass().getSimpleName() +
-                "/tomee-embedded-trial/MyRestApplication" +
+            WebClient.create("http://localhost:4204").path(
+                "/myAppName" +
+                    // "/tomee-embedded-trial/MyRestApplication" +
                 "/ping")
                 .get(String.class);
         System.out.println("got message: " + message);
-        assertEquals("pong", message);
+        assertEquals("pong Reservoir Dogs", message);
     }
 
 }
