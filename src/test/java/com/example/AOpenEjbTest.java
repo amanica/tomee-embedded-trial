@@ -84,7 +84,7 @@ public abstract class AOpenEjbTest {
      * You should call super if you override this..
      */
     protected void setProperties(Properties properties) {
-        // NB jndi.properties gets populated automagically!
+        loadProperties(properties, "jndi.properties");
         properties.setProperty(Context.INITIAL_CONTEXT_FACTORY,
             "org.apache.openejb.client.LocalInitialContextFactory");
         // Enabling option 'openejb.embedded.remotable' requires class

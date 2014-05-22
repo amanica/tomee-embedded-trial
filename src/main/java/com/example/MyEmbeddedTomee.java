@@ -5,7 +5,7 @@ import java.util.Properties;
 import javax.ejb.embeddable.EJBContainer;
 import javax.naming.Context;
 
-public class MyEmbededTomee {
+public class MyEmbeddedTomee {
     // // @Parameter(defaultValue = "${project.packaging}")
     // protected String packaging = "war";
     //
@@ -38,7 +38,7 @@ public class MyEmbededTomee {
     // private File serverXml;
 
     public static void main(String[] args) throws Exception {
-        new MyEmbededTomee().run();
+        new MyEmbeddedTomee().run();
     }
 
     private void run() throws Exception {

@@ -8,17 +8,21 @@
   <version>0.0.1-SNAPSHOT</version>
 
   <properties>
+
+    <!--
+    <openejb.javaee-api.version>6.0-5</openejb.javaee-api.version>
     <openejb.version>4.6.0.1</openejb.version>
     <tomee.version>1.6.0.1</tomee.version>
-    <!--
-    <tomee.version>1.6.1-SNAPSHOT</tomee.version>
+
+    <openejb.javaee-api.version>6.0-6-SNAPSHOT</openejb.javaee-api.version>
     <openejb.version>4.6.1-SNAPSHOT</openejb.version>
-    <tomee.version>1.7.0-SNAPSHOT</tomee.version>
-    <openejb.version>4.7.0-SNAPSHOT</openejb.version>
+    <tomee.version>1.6.1-SNAPSHOT</tomee.version>
     -->
+    <openejb.javaee-api.version>6.0-6-SNAPSHOT</openejb.javaee-api.version>
+    <openejb.version>4.7.0-SNAPSHOT</openejb.version>
+    <tomee.version>1.7.0-SNAPSHOT</tomee.version>
 
     <ehcache.version>2.7.6</ehcache.version>
-    <openejb.javaee-api.version>6.0-5</openejb.javaee-api.version>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <vaadin.version>6.7.1</vaadin.version>
@@ -60,6 +64,13 @@
       <groupId>com.vaadin</groupId>
       <artifactId>vaadin</artifactId>
       <version>${vaadin.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.openejb</groupId>
+      <artifactId>javaee-api</artifactId>
+      <version>${openejb.javaee-api.version}</version>
+      <scope>compile</scope>
     </dependency>
 
     <dependency>
@@ -148,26 +159,7 @@
       <artifactId>tomee-catalina</artifactId>
       <version>${tomee.version}</version>
     </dependency>
-<!--     <dependency>
-      <groupId>org.apache.openejb</groupId>
-      <artifactId>openejb-core-hibernate</artifactId>
-      <version>${openejb.version}</version>
-      <type>pom</type>
-      <exclusions>
-        <exclusion>
-          <artifactId>ehcache-core</artifactId>
-          <groupId>net.sf.ehcache</groupId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-     -->
 
-<!-- needed because old ehcache dependencies seems messed up -->
-    <!-- <dependency>
-      <groupId>net.sf.ehcache</groupId>
-      <artifactId>ehcache</artifactId>
-      <type>pom</type>
-    </dependency> -->
 
     <dependency>
       <groupId>org.hibernate</groupId>
@@ -227,17 +219,4 @@
     </dependency>
 
   </dependencies>
-  <!--
-  else i get [ERROR] 'dependencies.dependency.version' for net.sf.ehcache:ehcache:pom is missing. @ line 59, column 17
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>net.sf.ehcache</groupId>
-        <artifactId>ehcache</artifactId>
-        <version>${ehcache.version}</version>
-        <type>pom</type>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-   -->
 </project>

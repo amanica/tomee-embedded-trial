@@ -32,7 +32,7 @@ public class PingRSApplicationComposerTest {
         beanMovies.setLocalBean(new Empty());
 
         final StatelessBean beanPingRS =
-            new StatelessBean(PingRS.class);
+            new StatelessBean(Ping2RS.class);
         beanPingRS.setLocalBean(new Empty());
 
         final EjbJar ejbJar = new EjbJar();
