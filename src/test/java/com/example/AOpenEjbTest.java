@@ -5,8 +5,8 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Properties;
 
+import javax.ejb.embeddable.EJBContainer;
 import javax.naming.Context;
-import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import org.apache.openejb.api.LocalClient;
@@ -51,17 +51,18 @@ public abstract class AOpenEjbTest {
         Context context = getContext(properties);
         try {
             if (target.getClass().getAnnotation(LocalClient.class) == null) {
-                System.out
-                    .println("Subclass of AbstractEjbTest is not annotated with "
-                        + "@LocalClient:\n" + target);
-            }
+                System.out.println("***** Subclass of AbstractEjbTest is "
+                    + "not annotated with " + "@LocalClient:\n" + target);
+            } else {
 
-            if (getClass().getClassLoader().getResource(
-                "META-INF/application-client.xml") == null) {
-                System.out
-                    .println("META-INF/application-client.xml does not exist");
+                if (getClass().getClassLoader().getResource(
+                    "META-INF/application-client.xml") == null) {
+                    System.out.println("*****  META-INF/application-client.xml"
+                        + " does not exist");
+                } else {
+                    context.bind("inject", target);
+                }
             }
-            context.bind("inject", target);
         } catch (NamingException e) {
             System.out.println("Could not load context.");
             e.printStackTrace();
@@ -70,11 +71,13 @@ public abstract class AOpenEjbTest {
     }
 
     protected Context getContext(Properties properties) {
-        try {
-            return new InitialContext(properties);
-        } catch (NamingException e) {
-            throw new RuntimeException("Could not create new InitialContext", e);
-        }
+        return EJBContainer.createEJBContainer(properties).getContext();
+        //
+        // try {
+        // return new InitialContext(properties);
+        // } catch (NamingException e) {
+        // throw new RuntimeException("Could not create new InitialContext", e);
+        // }
     }
 
     /**
