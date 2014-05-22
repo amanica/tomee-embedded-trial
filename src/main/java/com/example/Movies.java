@@ -38,17 +38,21 @@ public class Movies {
     @PostConstruct
     public void testHibernate() throws Exception {
         System.out.println("##### testHibernate() ");
+
+        List<Movie> list = getMovies();
+        System.out.println(" ##### List.size() " + list.size());
+        for (Movie movie : list) {
+            System.out.println(" ##### delete movie " + movie.getTitle());
+            deleteMovie(movie);
+        }
+
+        System.out.println(" ##### Movies.getMovies() " + getMovies().size());
         addMovie(new Movie("Quentin Tarantino", "Reservoir Dogs", 1992));
         addMovie(new Movie("Joel Coen", "Fargo", 1996));
         addMovie(new Movie("Joel Coen", "The Big Lebowski", 1998));
 
-        List<Movie> list = getMovies();
+        list = getMovies();
         System.out.println(" ##### List.size() " + list.size());
 
-        for (Movie movie : list) {
-            System.out.println(" ##### movie " + movie.getTitle());
-            deleteMovie(movie);
-        }
-        System.out.println(" ##### Movies.getMovies() " + getMovies().size());
     }
 }

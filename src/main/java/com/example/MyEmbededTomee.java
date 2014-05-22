@@ -1,40 +1,41 @@
 package com.example;
 
-import java.io.File;
 import java.util.Properties;
 
 import javax.ejb.embeddable.EJBContainer;
 import javax.naming.Context;
 
 public class MyEmbededTomee {
-    // @Parameter(defaultValue = "${project.packaging}")
-    protected String packaging = "war";
-
-    // @Parameter(
-    // defaultValue = "${project.build.directory}/${project.build.finalName}")
-    protected File warFile;
-
-    // @Parameter(property = "tomee-embedded-plugin.http", defaultValue =
-    // "8080")
-    private int httpPort;
-
-    // @Parameter(property = "tomee-embedded-plugin.ajp", defaultValue = "8009")
-    private int ajpPort = 8009;
-
-    // @Parameter(property = "tomee-embedded-plugin.stop", defaultValue =
-    // "8005")
-    private int stopPort;
-
-    // @Parameter(property = "tomee-embedded-plugin.host",
-    // defaultValue = "localhost")
-    private String host;
-
-    // @Parameter(property = "tomee-embedded-plugin.lib",
-    // defaultValue = "${project.build.directory}/apache-tomee-embedded")
-    protected String dir;
-
-    // @Parameter
-    private File serverXml;
+    // // @Parameter(defaultValue = "${project.packaging}")
+    // protected String packaging = "war";
+    //
+    // // @Parameter(
+    // // defaultValue =
+    // "${project.build.directory}/${project.build.finalName}")
+    // protected File warFile;
+    //
+    // // @Parameter(property = "tomee-embedded-plugin.http", defaultValue =
+    // // "8080")
+    // private int httpPort;
+    //
+    // // @Parameter(property = "tomee-embedded-plugin.ajp", defaultValue =
+    // "8009")
+    // private int ajpPort = 8009;
+    //
+    // // @Parameter(property = "tomee-embedded-plugin.stop", defaultValue =
+    // // "8005")
+    // private int stopPort;
+    //
+    // // @Parameter(property = "tomee-embedded-plugin.host",
+    // // defaultValue = "localhost")
+    // private String host;
+    //
+    // // @Parameter(property = "tomee-embedded-plugin.lib",
+    // // defaultValue = "${project.build.directory}/apache-tomee-embedded")
+    // protected String dir;
+    //
+    // // @Parameter
+    // private File serverXml;
 
     public static void main(String[] args) throws Exception {
         new MyEmbededTomee().run();
