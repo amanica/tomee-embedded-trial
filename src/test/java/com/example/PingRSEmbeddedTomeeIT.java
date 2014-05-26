@@ -12,9 +12,7 @@ import org.apache.openejb.api.LocalClient;
 import org.junit.Test;
 
 @LocalClient
-public class PingRSEmbeddedTomeeTest extends
-    ATomeeTest
-{
+public class PingRSEmbeddedTomeeIT extends ATomeeIT {
     protected void setProperties(Properties properties) {
         try {
             Enumeration<URL> ejbJars =
@@ -37,29 +35,14 @@ public class PingRSEmbeddedTomeeTest extends
         }
 
         super.setProperties(properties);
-
-        /**
-         * Unfortunately this requires the built war file content to exist
-         * already which may only work with failsafe integration tests
-         * that run after install.
-         */
-        // loadProperties(properties, "jndi.properties");
-        properties.setProperty("javax.ejb.embeddable.modules",
-            "/stf/prj/tmp/tomee-embedded-trial/target/"
-                + "tomee-embedded-trial-0.0.1-SNAPSHOT");
-        // properties.setProperty("javax.ejb.embeddable.modules",
-        // "/stf/prj/tmp/tomee-embedded-trial/target/classes");
-        // properties.setProperty("openejb.tempclassloader.skip",
-        // "annotations");
-        properties.setProperty("openejb.validation.output.level", "VERBOSE");
     }
 
     @Test
     public void ping() {
         final String message =
-            WebClient.create("http://localhost:8080").path(
+            WebClient.create(getBaseUrl()).path(
                 // "/" + getClass().getSimpleName() +
-                "/tomee-embedded-trial/MyRestApplication" +
+                "tomee-embedded-trial/MyRestApplication" +
                 "/ping")
                 .get(String.class);
         System.out.println("got message: " + message);
