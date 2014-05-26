@@ -9,13 +9,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 
-
-
 @ApplicationPath("/MyRestApplication")
 @Produces({MediaType.APPLICATION_JSON})
 public class MyRestApplication extends Application {
     public Set<Class<?>> getClasses() {
         return new HashSet<Class<?>>(Arrays.asList(
-            Ping2RS.class));
+            PingRS.class));
     }
 }

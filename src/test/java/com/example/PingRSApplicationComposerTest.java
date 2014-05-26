@@ -3,6 +3,8 @@ package com.example;
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
+import java.net.ServerSocket;
+import java.util.Random;
 
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.openejb.config.EjbModule;
@@ -24,10 +26,22 @@ import org.junit.runner.RunWith;
 @EnableServices(value = {"jaxrs", "ejbd"}, httpDebug = true)
 @RunWith(ApplicationComposer.class)
 public class PingRSApplicationComposerTest {
+    private static final Random RANDOM = new Random();
+    protected int webPort;
+
+    public PingRSApplicationComposerTest() throws Exception {
+        // force port becuase other tests mess with the property
+        webPort = getAvailablePort();
+        System.setProperty("httpejbd.port", "" + webPort);
+        System.out.println("@@@@@@@@@ webPort = " + webPort);
+
+    }
 
     // @Classes(value = {MyRestApplication.class})
     @Module
     public EjbModule app() throws Exception {
+        // setupPort();
+
         SingletonBean beanMovies = new SingletonBean(Movies.class);
         beanMovies.setLocalBean(new Empty());
 
@@ -48,6 +62,7 @@ public class PingRSApplicationComposerTest {
         // beans.addManagedClass(PlcBaseJpaDAO.class);
 
         final EjbModule jar = new EjbModule(ejbJar);
+        jar.getProperties().setProperty("httpejbd.port", "" + webPort);
         jar.setBeans(beans);
 
         Webservices webservices = new Webservices();
@@ -60,6 +75,7 @@ public class PingRSApplicationComposerTest {
     // a persistence.xml
         public
         Persistence persistence() {
+
         final PersistenceUnit unit = new PersistenceUnit("movie-unit");
         unit.setProvider(HibernatePersistence.class);
         unit.setJtaDataSource("movieDatabase");
@@ -76,14 +92,50 @@ public class PingRSApplicationComposerTest {
 
     @Test
     public void ping() throws IOException {
+
         final String message =
-            WebClient.create("http://localhost:4204").path(
-                "/" + getClass().getSimpleName() + "/" +
-                    // "/MyRestApplication" +
-                    "/ping")
+            WebClient.create(
+                "http://localhost:"
+                    + webPort
+                    // System.getProperty("httpejbd.port" // ,
+                // "4204"
+                // )
+                )
+                .path(
+                    "/" + getClass().getSimpleName() + "/" +
+                        // "/MyRestApplication" +
+                        "/ping")
                 .get(String.class);
         System.out.println("got message: " + message);
         assertEquals("pong Reservoir Dogs", message);
+    }
+
+    /*
+     * http://stackoverflow.com/questions/7144401/how-can-i-find-an-open-ports-in-range-of-ports
+     */
+    private int getAvailablePort() throws IOException {
+        int port = 0;
+        do {
+            port = RANDOM.nextInt(20000) + 10000;
+        } while (!isPortAvailable(port));
+
+        return port;
+    }
+
+    private boolean isPortAvailable(final int port) throws IOException {
+        ServerSocket ss = null;
+        try {
+            ss = new ServerSocket(port);
+            ss.setReuseAddress(true);
+            return true;
+        } catch (final IOException e) {
+        } finally {
+            if (ss != null) {
+                ss.close();
+            }
+        }
+
+        return false;
     }
 
 }

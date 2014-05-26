@@ -53,6 +53,7 @@ public class PingRSEmbeddedTomeeTest extends
         // "annotations");
         properties.setProperty("openejb.validation.output.level", "VERBOSE");
     }
+
     @Test
     public void ping() {
         final String message =
@@ -62,7 +63,7 @@ public class PingRSEmbeddedTomeeTest extends
                 "/ping")
                 .get(String.class);
         System.out.println("got message: " + message);
-        assertEquals("pong", message);
+        assertEquals("pong Reservoir Dogs", message);
     }
 
 

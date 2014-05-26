@@ -2,8 +2,10 @@ package com.example;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.ServerSocket;
 import java.net.URL;
 import java.util.Properties;
+import java.util.Random;
 
 import javax.ejb.embeddable.EJBContainer;
 import javax.naming.Context;
@@ -18,11 +20,16 @@ import org.junit.Before;
  */
 public abstract class AOpenEjbTest {
 
+    private static final Random RANDOM = new Random();
     private Context context;
     private EJBContainer container;
 
+    protected int webPort;
+
     @Before
     public final void setupAOpenEjbTest() throws Exception {
+        webPort = getAvailablePort();
+        System.out.println("webPort = " + webPort);
         // needed here for users of our subclasses
         setUpBeforeInjection();
         injectContext();
@@ -30,14 +37,27 @@ public abstract class AOpenEjbTest {
     }
 
     @After
-    public final void closeContext() throws Exception {
-        tearDownBeforeClosingContext();
+    public final void closeContext() {
+        System.out.println("closeContext()");
+        try {
+            tearDownBeforeClosingContext();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if (context != null) {
-            context.close();
+            try {
+                context.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             context = null;
         }
         if (container != null) {
-            container.close();
+            try {
+                container.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             container = null;
         }
     }
@@ -53,8 +73,8 @@ public abstract class AOpenEjbTest {
         Properties properties = new Properties();
         setProperties(properties);
 
-        Context context = getContext(properties);
         try {
+            Context context = getContext(properties);
             if (target.getClass().getAnnotation(LocalClient.class) == null) {
                 System.out.println("***** Subclass of AbstractEjbTest is "
                     + "not annotated with " + "@LocalClient:\n" + target);
@@ -68,16 +88,17 @@ public abstract class AOpenEjbTest {
                     context.bind("inject", target);
                 }
             }
-        } catch (NamingException e) {
+        } catch (Exception e) {
             System.out.println("Could not load context.");
             e.printStackTrace();
+            closeContext();
         }
         return context;
     }
 
     protected Context getContext(Properties properties) {
         container = EJBContainer.createEJBContainer(properties);
-        return container.getContext();
+            return container.getContext();
         //
         // try {
         // return new InitialContext(properties);
@@ -100,6 +121,7 @@ public abstract class AOpenEjbTest {
         if (resource != null) {
             properties.setProperty("openejb.embedded.remotable", "true");
         }
+        properties.setProperty("httpejbd.port", "" + webPort);
     }
 
     /**
@@ -157,5 +179,33 @@ public abstract class AOpenEjbTest {
                 + ".");
             e.printStackTrace();
         }
+    }
+
+    /*
+     * http://stackoverflow.com/questions/7144401/how-can-i-find-an-open-ports-in-range-of-ports
+     */
+    private int getAvailablePort() throws IOException {
+        int port = 0;
+        do {
+            port = RANDOM.nextInt(20000) + 10000;
+        } while (!isPortAvailable(port));
+
+        return port;
+    }
+
+    private boolean isPortAvailable(final int port) throws IOException {
+        ServerSocket ss = null;
+        try {
+            ss = new ServerSocket(port);
+            ss.setReuseAddress(true);
+            return true;
+        } catch (final IOException e) {
+        } finally {
+            if (ss != null) {
+                ss.close();
+            }
+        }
+
+        return false;
     }
 }

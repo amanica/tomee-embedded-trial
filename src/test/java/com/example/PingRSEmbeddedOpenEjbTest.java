@@ -44,7 +44,7 @@ public class PingRSEmbeddedOpenEjbTest extends AOpenEjbTest {
     @Test
     public void ping() {
         String message =
-            WebClient.create("http://localhost:4204").path(
+            WebClient.create("http://localhost:" + webPort).path(
                 "/myAppName" +
                     // "/tomee-embedded-trial/MyRestApplication" +
                 "/ping")
@@ -53,7 +53,7 @@ public class PingRSEmbeddedOpenEjbTest extends AOpenEjbTest {
         assertEquals("pong Reservoir Dogs", message);
 
         message =
-            WebClient.create("http://localhost:4204").path(
+            WebClient.create("http://localhost:" + webPort).path(
                 "/myAppName" +
                     // "/tomee-embedded-trial/MyRestApplication" +
                     "/ping2")
