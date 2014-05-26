@@ -47,18 +47,18 @@ public abstract class AOpenEjbTest {
         if (context != null) {
             try {
                 context.close();
+                context = null;
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            context = null;
         }
         if (container != null) {
             try {
                 container.close();
+                container = null;
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            container = null;
         }
     }
 
@@ -92,12 +92,16 @@ public abstract class AOpenEjbTest {
             System.out.println("Could not load context.");
             e.printStackTrace();
             closeContext();
+            throw new RuntimeException("Could not start up container.", e);
         }
         return context;
     }
 
     protected Context getContext(Properties properties) {
         container = EJBContainer.createEJBContainer(properties);
+        // if this fails I get:
+        // INFO - EJBContainer already initialized. Call ejbContainer.close() to
+        // allow reinitialization
             return container.getContext();
         //
         // try {
