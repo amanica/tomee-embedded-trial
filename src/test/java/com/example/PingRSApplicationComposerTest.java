@@ -32,12 +32,17 @@ public class PingRSApplicationComposerTest {
         beanMovies.setLocalBean(new Empty());
 
         final StatelessBean beanPingRS =
-            new StatelessBean(Ping2RS.class);
+            new StatelessBean(PingRS.class);
         beanPingRS.setLocalBean(new Empty());
+
+        final StatelessBean beanPing2RS =
+            new StatelessBean(Ping2RS.class);
+        beanPing2RS.setLocalBean(new Empty());
 
         final EjbJar ejbJar = new EjbJar();
         ejbJar.addEnterpriseBean(beanMovies);
         ejbJar.addEnterpriseBean(beanPingRS);
+        ejbJar.addEnterpriseBean(beanPing2RS);
 
         final Beans beans = new Beans();
         // beans.addManagedClass(PlcBaseJpaDAO.class);
@@ -73,7 +78,7 @@ public class PingRSApplicationComposerTest {
     public void ping() throws IOException {
         final String message =
             WebClient.create("http://localhost:4204").path(
-                "/" + getClass().getSimpleName() +
+                "/" + getClass().getSimpleName() + "/" +
                     // "/MyRestApplication" +
                     "/ping")
                 .get(String.class);

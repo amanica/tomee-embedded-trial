@@ -19,6 +19,7 @@ import org.junit.Before;
 public abstract class AOpenEjbTest {
 
     private Context context;
+    private EJBContainer container;
 
     @Before
     public final void setupAOpenEjbTest() throws Exception {
@@ -34,6 +35,10 @@ public abstract class AOpenEjbTest {
         if (context != null) {
             context.close();
             context = null;
+        }
+        if (container != null) {
+            container.close();
+            container = null;
         }
     }
 
@@ -71,7 +76,8 @@ public abstract class AOpenEjbTest {
     }
 
     protected Context getContext(Properties properties) {
-        return EJBContainer.createEJBContainer(properties).getContext();
+        container = EJBContainer.createEJBContainer(properties);
+        return container.getContext();
         //
         // try {
         // return new InitialContext(properties);
