@@ -20,4 +20,5 @@ public class PingRS {
         return "pong"
             + " " + movies.getMovies().get(0).getTitle();
     }
+
 }

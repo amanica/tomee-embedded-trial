@@ -17,8 +17,8 @@ public class ATomeeIT extends AOpenEjbTest {
         properties.setProperty(EJBContainer.PROVIDER, "tomee-embedded");
 
         String webappDir =
-            ResourceBundle.getBundle("maven").getString("webapp-dir");
-        System.out.println("webapp-dir=" + webappDir);
+            ResourceBundle.getBundle("maven").getString("webappDir");
+        System.out.println("webappDir=" + webappDir);
         properties.setProperty("javax.ejb.embeddable.modules",
             webappDir);
 

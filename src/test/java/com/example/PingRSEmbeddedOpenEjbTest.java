@@ -6,6 +6,7 @@ import java.util.Properties;
 
 import javax.ejb.EJB;
 import javax.ejb.embeddable.EJBContainer;
+import javax.ws.rs.core.MediaType;
 
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.openejb.api.LocalClient;
@@ -47,12 +48,15 @@ public class PingRSEmbeddedOpenEjbTest extends AOpenEjbTest {
             WebClient.create("http://localhost:" + webPort).path(
                 "/myAppName" +
                     // "/tomee-embedded-trial/MyRestApplication" +
-                "/ping")
+                    "/ping")
                 .get(String.class);
         System.out.println("got message: " + message);
         assertEquals("pong Reservoir Dogs", message);
+    }
 
-        message =
+    @Test
+    public void ping2() {
+        String message =
             WebClient.create("http://localhost:" + webPort).path(
                 "/myAppName" +
                     // "/tomee-embedded-trial/MyRestApplication" +
@@ -62,4 +66,18 @@ public class PingRSEmbeddedOpenEjbTest extends AOpenEjbTest {
         assertEquals("pong2 Reservoir Dogs", message);
     }
 
+    @Test
+    public void giveMeADuck() {
+        String message =
+            WebClient.create("http://localhost:" + webPort).path(
+                "/myAppName" +
+                    "/duck")
+                .accept(MediaType.APPLICATION_JSON_TYPE)
+                .get(String.class);
+        System.out.println("got message: " + message);
+        assertEquals("{\"duck\":{\"name\":\"Donald\","
+            + "\"nephews\":[\"Huey\",\"Dewey\",\"Louie\"],"
+            + "\"nicknames\":\"Don\"" // should be an array :(
+            + "}}", message);
+    }
 }
