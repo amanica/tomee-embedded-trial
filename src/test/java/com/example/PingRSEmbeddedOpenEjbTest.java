@@ -77,7 +77,7 @@ public class PingRSEmbeddedOpenEjbTest extends AOpenEjbTest {
         System.out.println("got message: " + message);
         assertEquals("{\"duck\":{\"name\":\"Donald\","
             + "\"nephews\":[\"Huey\",\"Dewey\",\"Louie\"],"
-            + "\"nicknames\":\"Don\"" // should be an array :(
+            + "\"nicknames\":[\"Don\"]" // should be an array :(
             + "}}", message);
     }
 }

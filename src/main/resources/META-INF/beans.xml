@@ -1,0 +1,3 @@
+<beans>
+<!--  only here because I tried out @javax.enterprise.context.RequestScoped -->
+</beans>

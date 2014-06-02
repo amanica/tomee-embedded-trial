@@ -14,6 +14,6 @@ import javax.ws.rs.core.MediaType;
 public class MyRestApplication extends Application {
     public Set<Class<?>> getClasses() {
         return new HashSet<Class<?>>(Arrays.asList(
-            PingRS.class));
+            PingRS.class, DuckRS.class));
     }
 }

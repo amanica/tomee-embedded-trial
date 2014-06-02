@@ -7,6 +7,8 @@ import java.net.URL;
 import java.util.Enumeration;
 import java.util.Properties;
 
+import javax.ws.rs.core.MediaType;
+
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.openejb.api.LocalClient;
 import org.junit.Test;
@@ -49,5 +51,19 @@ public class PingRSEmbeddedTomeeIT extends ATomeeIT {
         assertEquals("pong Reservoir Dogs", message);
     }
 
+    @Test
+    public void giveMeADuck() {
+        String message =
+            WebClient.create(getBaseUrl()).path(
+                "tomee-embedded-trial/MyRestApplication" +
+                    "/duck")
+                .accept(MediaType.APPLICATION_JSON_TYPE)
+                .get(String.class);
+        System.out.println("got message: " + message);
+        assertEquals("{\"duck\":{\"name\":\"Donald\","
+            + "\"nephews\":[\"Huey\",\"Dewey\",\"Louie\"],"
+            + "\"nicknames\":\"Don\"" // should be an array :(
+            + "}}", message);
+    }
 
 }
