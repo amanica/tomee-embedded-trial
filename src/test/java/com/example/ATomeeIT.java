@@ -19,8 +19,8 @@ public class ATomeeIT extends AOpenEjbTest {
         String webappDir =
             ResourceBundle.getBundle("maven").getString("webappDir");
         System.out.println("webappDir=" + webappDir);
-        properties.setProperty("javax.ejb.embeddable.modules",
-            webappDir);
+        properties.setProperty(EJBContainer.APP_NAME, "dummyAppName");
+        properties.setProperty(EJBContainer.MODULES, webappDir);
 
         // httpejbd.port seems to be ignored by tomee..
         properties.setProperty("tomee.ejbcontainer.http.port", "" + webPort);
