@@ -11,6 +11,7 @@ public class Duck {
     private String name = "Donald";
     private List<String> nicknames;
     private List<String> nephews;
+    private List<String> children; // should give null
 
     public Duck() {
         nicknames = Arrays.asList("Don");
@@ -40,6 +41,14 @@ public class Duck {
 
     public void setNephews(List<String> nephews) {
         this.nephews = nephews;
+    }
+
+    public List<String> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<String> children) {
+        this.children = children;
     }
 
 }
