@@ -1,60 +1,39 @@
 package com.example;
 
 import java.util.Properties;
+import java.util.ResourceBundle;
 
 import javax.ejb.embeddable.EJBContainer;
 import javax.naming.Context;
 
 public class MyEmbeddedTomee {
-    // // @Parameter(defaultValue = "${project.packaging}")
-    // protected String packaging = "war";
-    //
-    // // @Parameter(
-    // // defaultValue =
-    // "${project.build.directory}/${project.build.finalName}")
-    // protected File warFile;
-    //
-    // // @Parameter(property = "tomee-embedded-plugin.http", defaultValue =
-    // // "8080")
-    // private int httpPort;
-    //
-    // // @Parameter(property = "tomee-embedded-plugin.ajp", defaultValue =
-    // "8009")
-    // private int ajpPort = 8009;
-    //
-    // // @Parameter(property = "tomee-embedded-plugin.stop", defaultValue =
-    // // "8005")
-    // private int stopPort;
-    //
-    // // @Parameter(property = "tomee-embedded-plugin.host",
-    // // defaultValue = "localhost")
-    // private String host;
-    //
-    // // @Parameter(property = "tomee-embedded-plugin.lib",
-    // // defaultValue = "${project.build.directory}/apache-tomee-embedded")
-    // protected String dir;
-    //
-    // // @Parameter
-    // private File serverXml;
 
     public static void main(String[] args) throws Exception {
         new MyEmbeddedTomee().run();
     }
 
     private void run() throws Exception {
-        Properties p = new Properties();
+        Properties p = new Properties(System.getProperties());
 
         p.setProperty(EJBContainer.PROVIDER, "tomee-embedded");
-        p.setProperty(
-            "javax.ejb.embeddable.modules",
-            "/stf/prj/tmp/tomee-embedded-trial/target/"
-                + "tomee-embedded-trial-0.0.1-SNAPSHOT");
+        // p.setProperty(EJBContainer.MODULES,
+        // "/stf/prj/tmp/tomee-embedded-trial/target/"
+        // + "tomee-embedded-trial-0.0.1-SNAPSHOT");
+
+        // // (no clue why this is needed):
+        // p.setProperty(EJBContainer.MODULES, System
+        // .getProperty(EJBContainer.MODULES));
+
+        String webappDir =
+            ResourceBundle.getBundle("maven").getString("webappDir");
+        p.setProperty(EJBContainer.MODULES, webappDir);
 
         // p.put("movieDatabase", "new://Resource?type=DataSource");
         // p.put("movieDatabase.JdbcDriver", "org.hsqldb.jdbcDriver");
         // p.put("movieDatabase.JdbcUrl", "jdbc:hsqldb:mem:moviedb");
         // p.put("openejb.validation.output.level", "VERBOSE");
 
+        p.list(System.out);
         Context context =
             EJBContainer.createEJBContainer(p).getContext();
 

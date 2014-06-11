@@ -60,10 +60,11 @@ public class PingRSEmbeddedTomeeIT extends ATomeeIT {
                 .accept(MediaType.APPLICATION_JSON_TYPE)
                 .get(String.class);
         System.out.println("got message: " + message);
-        assertEquals("{\"name\":\"Donald\","
-            + "\"nicknames\":[\"Don\"]," // should be an array :(
-            + "\"nephews\":[\"Huey\",\"Dewey\",\"Louie\"]"
-            + "}", message);
+        assertEquals("{\n" +
+            "  \"name\" : \"Donald\",\n" +
+            "  \"nicknames\" : [ \"Don\" ],\n" +
+            "  \"nephews\" : [ \"Huey\", \"Dewey\", \"Louie\" ]\n" +
+            "}", message);
     }
 
 }
