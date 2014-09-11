@@ -1,11 +1,12 @@
 <openejb-jar xmlns="http://www.openejb.org/openejb-jar/1.1">
   <pojo-deployment class-name="jaxrs-application">
+  <!-- <pojo-deployment class-name="com.example.MyRestApplication"> -->
   <!--
       cxf.jaxrs.providers = org.codehaus.jackson.jaxrs.JacksonJsonProvider,
         org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider
    -->
     <properties>
-       cxf.jaxrs.providers = com.example.MyJsonProvider
+      cxf.jaxrs.providers = com.example.MyJsonProvider
     </properties>
   </pojo-deployment>
 </openejb-jar>
