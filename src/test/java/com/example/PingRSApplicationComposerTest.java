@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.Random;
 
+import javax.ws.rs.core.MediaType;
+
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.openejb.config.EjbModule;
 import org.apache.openejb.jee.Beans;
@@ -20,6 +22,7 @@ import org.apache.openejb.junit.ApplicationComposer;
 import org.apache.openejb.testing.EnableServices;
 import org.apache.openejb.testing.Module;
 import org.hibernate.ejb.HibernatePersistence;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -53,10 +56,15 @@ public class PingRSApplicationComposerTest {
             new StatelessBean(Ping2RS.class);
         beanPing2RS.setLocalBean(new Empty());
 
+        final StatelessBean beanDuckRS =
+            new StatelessBean(DuckRS.class);
+        beanPing2RS.setLocalBean(new Empty());
+
         final EjbJar ejbJar = new EjbJar();
         ejbJar.addEnterpriseBean(beanMovies);
         ejbJar.addEnterpriseBean(beanPingRS);
         ejbJar.addEnterpriseBean(beanPing2RS);
+        ejbJar.addEnterpriseBean(beanDuckRS);
 
         final Beans beans = new Beans();
         // beans.addManagedClass(PlcBaseJpaDAO.class);
@@ -108,6 +116,23 @@ public class PingRSApplicationComposerTest {
                 .get(String.class);
         System.out.println("got message: " + message);
         assertEquals("pong Reservoir Dogs", message);
+    }
+
+    @Ignore
+    @Test
+    public void giveMeADuck() {
+        String message =
+            WebClient.create("http://localhost:" + webPort).path(
+                "/" + getClass().getSimpleName() + "/" +
+                    "/duck")
+                .accept(MediaType.APPLICATION_JSON_TYPE)
+                .get(String.class);
+        System.out.println("got message: " + message);
+        assertEquals("{\n" +
+            "  \"name\" : \"Donald\",\n" +
+            "  \"nicknames\" : [ \"Don\" ],\n" +
+            "  \"nephews\" : [ \"Huey\", \"Dewey\", \"Louie\" ]\n" +
+            "}", message);
     }
 
     /*

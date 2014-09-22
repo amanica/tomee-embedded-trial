@@ -60,13 +60,10 @@ public class PingRSEmbeddedTomeeIT extends ATomeeIT {
                 .accept(MediaType.APPLICATION_JSON_TYPE)
                 .get(String.class);
         System.out.println("got message: " + message);
-        // FIXME: not sure why running this in integration test,
-        // doesn't give us indented json :(
-        assertEquals("{" +
-            "\"name\":\"Donald\"," +
-            "\"nicknames\":[\"Don\"]," +
-            "\"nephews\":[\"Huey\",\"Dewey\",\"Louie\"]," +
-            "\"children\":null" +
+        assertEquals("{\n" +
+            "  \"name\" : \"Donald\",\n" +
+            "  \"nicknames\" : [ \"Don\" ],\n" +
+            "  \"nephews\" : [ \"Huey\", \"Dewey\", \"Louie\" ]\n" +
             "}", message);
     }
 
