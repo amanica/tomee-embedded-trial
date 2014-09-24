@@ -33,7 +33,7 @@ public class PingRSApplicationComposerTest {
     protected int webPort;
 
     public PingRSApplicationComposerTest() throws Exception {
-        // force port becuase other tests mess with the property
+        // force port because other tests mess with the property
         webPort = getAvailablePort();
         System.setProperty("httpejbd.port", "" + webPort);
         System.out.println("@@@@@@@@@ webPort = " + webPort);

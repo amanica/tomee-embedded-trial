@@ -9,7 +9,8 @@ import javax.ws.rs.Path;
 @Stateless
 @LocalBean
 @Path("/ping2")
-public class Ping2RS {
+public class Ping2RS extends PingRS
+{
 
 
     @EJB

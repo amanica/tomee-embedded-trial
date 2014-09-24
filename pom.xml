@@ -22,8 +22,8 @@
     <tomee.version>1.6.1-SNAPSHOT</tomee.version>
     -->
     <openejb.javaee-api.version>6.0-6</openejb.javaee-api.version>
-    <openejb.version>4.7.0</openejb.version>
-    <tomee.version>1.7.0</tomee.version>
+    <openejb.version>4.7.1</openejb.version>
+    <tomee.version>1.7.1</tomee.version>
 
     <ehcache.version>2.7.6</ehcache.version>
 
