@@ -18,6 +18,7 @@ import org.junit.Before;
 /**
  * Subclasses must be annotated with @org.apache.openejb.api.LocalClient
  */
+
 public abstract class AOpenEjbTest {
 
     private static final Random RANDOM = new Random();
@@ -59,6 +60,24 @@ public abstract class AOpenEjbTest {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+
+        try {
+            Thread.sleep(200);
+            for (int i = 1; !isPortAvailable(webPort); i++) {
+                if (i > 10) {
+                    System.out.println(" Port doesn't want to close :( "
+                        + webPort);
+                    break;
+                }
+                if (i == 5) {
+                    System.out.println(i + ") waiting for port to close: "
+                        + webPort);
+                }
+                Thread.sleep(100 * i);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
