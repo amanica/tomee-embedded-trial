@@ -11,7 +11,8 @@ import javax.ws.rs.core.MediaType;
 
 @ApplicationPath("/MyRestApplication")
 @Produces({MediaType.APPLICATION_JSON})
-public class MyRestApplication extends Application {
+public class MyRestApplication extends Application
+{
 
     // public MyRestApplication() {
     // this.
